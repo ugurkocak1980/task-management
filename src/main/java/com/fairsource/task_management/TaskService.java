@@ -27,22 +27,23 @@ public class TaskService {
         return null;
     }
 
-    public Task saveTask(Task task) {
+    public void saveTask(Task task) {
         task.setCreated(Instant.now());
-        Task savedTask = taskRepo.save(task);
+        if (this.getTaskById(task.getId()) != null) {
+            throw new RuntimeException("task with id ${task.getId()} already exists");
+        }
+        taskRepo.save(task);
 
         log.info("Task with with id: {} saved successfully", task.getId());
-        return savedTask;
     }
 
-    public Task updateTask(Task task) {
+    public void updateTask(Task task) {
         Optional<Task> existingTask = taskRepo.findById(task.getId());
         existingTask.ifPresent(value -> task.setCreated(value.getCreated()));
 
-        Task updatedTask = taskRepo.save(task);
+        taskRepo.save(task);
 
         log.info("Task with with id: {} updated successfully", task.getId());
-        return updatedTask;
     }
 
     public void deleteTask(Long id) {
