@@ -1,17 +1,34 @@
 package com.fairsource.task_management;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hamcrest.CoreMatchers;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatcher;
 import org.mockito.ArgumentMatchers;
+import org.mockito.internal.matchers.Any;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.awaitility.Awaitility.given;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mockito.BDDMockito.given;
+
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+
+
 
 @WebMvcTest(controllers = TaskController.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -25,10 +42,30 @@ public class TaskControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+    private Task task;
+
+    Instant now =Instant.now();
+
+    List<Task> taskList = new ArrayList<>();
+
+    @BeforeEach
+    public void init(){
+        task = Task.builder().name("MyToDo").done(false).id(1L).priority(Priority.NORMAL).created(now).build();
+        taskList.add(task);
+    }
 
     @Test
-    public void TaskController_createTask_returnCreated() {
-        given(taskService.saveTask(ArgumentMatchers.any())).;
+    public void TaskController_createTask_returnCreated() throws Exception{
+        doNothing().when(taskService).saveTask(task);
+        doReturn(taskList).when(taskService).getAllTasks();
+
+        ResultActions response = mockMvc.perform(post("/task/v1/")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(task)));
+
+        response.andExpect((MockMvcResultMatchers.status().isOk()))
+                .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(taskList)));
+
     }
 
 }
