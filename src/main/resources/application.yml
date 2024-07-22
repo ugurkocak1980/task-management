@@ -8,8 +8,8 @@ spring:
     enabled: true
   datasource:
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/tasks?currentSchema=tasks
+    url: jdbc:postgresql://localhost:5432/taskmanager-postgres
     username: postgres
-    password: postgres
+    password: Selim03Kocak09!
   jpa:
     show-sql: true

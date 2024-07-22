@@ -54,6 +54,13 @@
 		</dependency>
 	</dependencies>
 
+	<pluginRepositories>
+		<pluginRepository>
+			<id>redgate</id>
+			<url>https://download.red-gate.com/maven/release</url>
+		</pluginRepository>
+	</pluginRepositories>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -66,6 +73,16 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>7.0.0</version>
+				<configuration>
+					<url>jdbc:postgresql://localhost:5432/taskmanager-postgres</url>
+					<user>postgres</user>
+					<password>Selim03Kocak09!</password>
 				</configuration>
 			</plugin>
 		</plugins>
