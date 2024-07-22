@@ -47,7 +47,11 @@ public class TaskService {
     }
 
     public void deleteTask(Long id) {
+        if(getTaskById(id) != null){
         taskRepo.deleteById(id);
+        } else {
+            throw new RuntimeException("task with id ${task.getId()} does not exists");
+        }
         log.info("Task with with id: {} deleted successfully", id);
     }
 
