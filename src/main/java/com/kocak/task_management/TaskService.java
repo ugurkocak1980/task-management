@@ -1,4 +1,4 @@
-package com.fairsource.task_management;
+package com.kocak.task_management;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

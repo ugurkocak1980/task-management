@@ -1,7 +1,9 @@
-package com.fairsource.task_management;
+package com.kocak.task_management;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.Accessors;
+
 import java.time.Instant;
 
 @NoArgsConstructor
@@ -11,6 +13,7 @@ import java.time.Instant;
 @ToString
 @Entity
 @Builder
+@Accessors(chain = true)
 @Table(name = "task")
 public class Task {
     @Id

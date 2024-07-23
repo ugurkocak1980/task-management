@@ -1,4 +1,4 @@
-package com.fairsource.task_management;
+package com.kocak.task_management;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

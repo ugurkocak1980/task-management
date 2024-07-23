@@ -1,4 +1,4 @@
-package com.fairsource.task_management;
+package com.kocak.task_management;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
